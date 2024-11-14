@@ -1,6 +1,8 @@
 package com.example.profileapp
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -8,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
@@ -15,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
     setContentView(R.layout.activity_main)
+
+    WindowCompat.setDecorFitsSystemWindows(window, true)
 
     val profileImage = findViewById<ImageView>(R.id.profileImage)
     val nameText = findViewById<TextView>(R.id.nameText)
@@ -42,6 +47,29 @@ class MainActivity : AppCompatActivity() {
 
     profileImage.setOnClickListener {
       Toast.makeText(this, "Foto de perfil de ${nameText.text}", Toast.LENGTH_SHORT).show()
+    }
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.header_menu, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.action_about -> {
+        Toast.makeText(this, "Configurações action_about", Toast.LENGTH_SHORT).show()
+        true
+      }
+      R.id.action_help -> {
+        Toast.makeText(this, "Configurações action_help", Toast.LENGTH_SHORT).show()
+        true
+      }
+      R.id.action_new_experience -> {
+        Toast.makeText(this, "Configurações action_new_experience", Toast.LENGTH_SHORT).show()
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
     }
   }
 }
