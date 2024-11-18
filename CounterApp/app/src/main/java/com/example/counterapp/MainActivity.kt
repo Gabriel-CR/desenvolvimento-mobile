@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.*
@@ -34,6 +36,7 @@ class MainActivity : ComponentActivity() {
 fun CounterApp() {
   var result by remember { mutableDoubleStateOf(0.0) }
   var input by remember { mutableStateOf("") }
+  var history by remember { mutableStateOf(listOf<String>()) }
 
   Column (
     horizontalAlignment = Alignment.CenterHorizontally,
@@ -42,6 +45,12 @@ fun CounterApp() {
       .padding(16.dp),
     verticalArrangement = Arrangement.Center
     ) {
+    LazyColumn {
+      items(history.takeLast(5)) { item ->
+        Text(text = item)
+      }
+    }
+    
     Text(
       text = "Resultado: $result",
       fontSize = 24.sp,
@@ -67,6 +76,7 @@ fun CounterApp() {
         onClick = {
           result += input.toDoubleOrNull() ?: 0.0
           input = ""
+          history = history + "Incrementar $input -> Resultado: $result"
         },
         modifier = Modifier.weight(1f)
       ) {
@@ -77,6 +87,7 @@ fun CounterApp() {
         onClick = {
           result -= input.toDoubleOrNull() ?: 0.0
           input = ""
+          history = history + "Decrementar $input -> Resultado: $result"
         },
         modifier = Modifier.weight(1f)
       ) {
@@ -94,6 +105,7 @@ fun CounterApp() {
         onClick = {
           result *= input.toDoubleOrNull() ?: 0.0
           input = ""
+          history = history + "Multiplicar $input -> Resultado: $result"
         },
         modifier = Modifier.weight(1f)
       ) {
@@ -107,6 +119,7 @@ fun CounterApp() {
             result /= value
           }
           input = ""
+          history = history + "Dividir $input -> Resultado: $result"
         },
         modifier = Modifier.weight(1f)
       ) {
