@@ -24,11 +24,11 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,7 +38,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -116,12 +115,19 @@ fun HomeScreen(onAnimalSelected: (String) -> Unit) {
 
 @Composable
 fun AnimalScreen(animal: String) {
-  val content = LocalContext.current
+  val context = LocalContext.current
   val imageRes = if (animal == "Dog") R.drawable.dog else R.drawable.cat
   val soundRes = if (animal == "Dog") R.raw.dog_bark else R.raw.cat_meow
   val videoRes = if (animal == "Dog") R.raw.dog_video else R.raw.cat_video
 
-  Log.d("App", "AnimalScreen: $animal")
+  var mediaPlayer: MediaPlayer? by remember { mutableStateOf(null) }
+
+  DisposableEffect(Unit) {
+    onDispose {
+      mediaPlayer?.release()
+      mediaPlayer = null
+    }
+  }
 
   Column(
     modifier = Modifier
@@ -141,25 +147,22 @@ fun AnimalScreen(animal: String) {
 
     Button(onClick = {
       try {
-        val mediaPlayer = MediaPlayer.create(content, soundRes)
+        mediaPlayer?.release()
+        mediaPlayer = MediaPlayer.create(context, soundRes)
 
-        if (mediaPlayer != null) {
-          mediaPlayer.start()
-          mediaPlayer.setOnCompletionListener { mediaPlayer.release() }
-        } else {
-          println("Erro: MediaPlayer retornou null para o recurso $soundRes")
-        }
+        mediaPlayer?.start()
+        mediaPlayer?.setOnCompletionListener { it.release() }
       } catch (e: Exception) {
-        println("Erro ao inicializar MediaPlayer: ${e.message}")
+        Log.e("AnimalScreen", "Erro ao inicializar MediaPlayer: ${e.message}")
       }
     }) { Text("Reproduzir Som") }
 
     Spacer(modifier = Modifier.height(16.dp))
 
     Button(onClick = {
-      val intent = Intent(content, VideoPlayerActivity::class.java)
-      intent.putExtra("videoRes", videoRes) // Ajustado para "videoRes" (minúscula)
-      content.startActivity(intent)
+      val intent = Intent(context, VideoPlayerActivity::class.java)
+      intent.putExtra("videoRes", videoRes)
+      context.startActivity(intent)
     }) {
       Text("Reproduzir Video")
     }
