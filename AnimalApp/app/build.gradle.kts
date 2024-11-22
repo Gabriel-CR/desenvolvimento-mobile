@@ -5,7 +5,7 @@ plugins {
 
 android {
   namespace = "com.example.animalapp"
-  compileSdk = 34
+  compileSdk = 35
 
   defaultConfig {
     applicationId = "com.example.animalapp"
@@ -47,6 +47,20 @@ android {
 }
 
 dependencies {
+  // Jetpack Compose
+  implementation("androidx.compose.ui:ui:1.5.0")
+  implementation("androidx.compose.material3:material3:1.2.0")
+  implementation("androidx.compose.runtime:runtime:1.5.0")
+  implementation("androidx.compose.foundation:foundation:1.5.0")
+
+  // Navigation Component para Compose
+  implementation("androidx.navigation:navigation-compose:2.6.0")
+
+  // Media (opcional para áudio e vídeo)
+  implementation("androidx.media:media:1.6.0")
+
+  // AndroidX Core
+  implementation("androidx.core:core-ktx:1.12.0")
 
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)
