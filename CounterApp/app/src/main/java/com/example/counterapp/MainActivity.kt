@@ -9,6 +9,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -80,7 +82,7 @@ fun CounterApp() {
         },
         modifier = Modifier.weight(1f)
       ) {
-        Text("Incrementar")
+        Text("+ Incrementar")
       }
 
       Button(
@@ -91,7 +93,7 @@ fun CounterApp() {
         },
         modifier = Modifier.weight(1f)
       ) {
-        Text("Decrementar")
+        Text("- Decrementar")
       }
     }
 
@@ -109,7 +111,7 @@ fun CounterApp() {
         },
         modifier = Modifier.weight(1f)
       ) {
-        Text("Multiplicar")
+        Text("x Multiplicar")
       }
 
       Button(
@@ -123,7 +125,25 @@ fun CounterApp() {
         },
         modifier = Modifier.weight(1f)
       ) {
-        Text("Dividir")
+        Text("/ Dividir")
+      }
+    }
+
+    Row(
+      horizontalArrangement = Arrangement.spacedBy(8.dp),
+      modifier = Modifier
+        .fillMaxWidth(0.5f)
+        .padding(top = 8.dp)
+    ) {
+      Button(
+        onClick = {
+          result *= (input.toDoubleOrNull() ?: 0.0) / 100
+          input = ""
+          history = history + "Porcentagem $input -> Resultado: $result"
+        },
+        modifier = Modifier.weight(1f)
+      ) {
+        Text("% Porcentagem")
       }
     }
 
@@ -136,6 +156,11 @@ fun CounterApp() {
       },
       modifier = Modifier.fillMaxWidth()
     ) {
+      Icon(
+        imageVector = Icons.Default.Delete,
+        contentDescription = "Limpar"
+      )
+      Spacer(modifier = Modifier.width(8.dp))
       Text("Limpar")
     }
   }
