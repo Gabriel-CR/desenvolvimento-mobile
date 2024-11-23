@@ -70,10 +70,11 @@ fun IPlay() {
         }
       )
     }
-  ) {
+  ) { innerPadding ->
     Column(
-      modifier = Modifier.fillMaxSize()
-                         .padding(WindowInsets.statusBars.asPaddingValues()),
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(innerPadding),
       horizontalAlignment = Alignment.CenterHorizontally
     ) {
       Image(
