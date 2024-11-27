@@ -23,6 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import android.graphics.Color
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -72,42 +75,16 @@ fun IPlay() {
 
       Spacer(modifier = Modifier.height(16.dp))
 
-      ButtonMenu(
-        text = "Item 1",
-        context = context,
-        onClick = {
-          showCustomToast(
-            context = context,
-            message = "Item 1"
-          )
+      LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Bottom
+      ) {
+        items(10) { index ->
+          ElevatedCard()
+
+          Spacer(modifier = Modifier.height(5.dp))
         }
-      )
-
-      Spacer(modifier = Modifier.height(16.dp))
-
-      ButtonMenu(
-        text = "Item 2",
-        context = context,
-        onClick = {
-          showCustomToast(
-            context = context,
-            message = "Item 2"
-          )
-        }
-      )
-
-      Spacer(modifier = Modifier.height(16.dp))
-
-      ButtonMenu(
-        text = "Item 3",
-        context = context,
-        onClick = {
-          showCustomToast(
-            context = context,
-            message = "Item 3"
-          )
-        }
-      )
+      }
     }
   }
 }
