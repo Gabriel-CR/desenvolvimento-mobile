@@ -26,7 +26,7 @@ fun BottomNavigationBar(navController: NavController) {
         selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
         onClick = {
           navController.navigate(screen.route) {
-            popUpTo(navController.graph.startDestinationId) { saveState = true }
+            popUpTo(BottomBarScreen.Home.route) { inclusive = false }
             launchSingleTop = true
             restoreState = true
           }
