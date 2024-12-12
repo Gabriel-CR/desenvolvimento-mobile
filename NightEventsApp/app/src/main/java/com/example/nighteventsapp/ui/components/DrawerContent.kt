@@ -46,7 +46,7 @@ fun DrawerContent(navController: NavHostController, onSendNotification: () -> Un
         text = "Perfil",
         modifier = Modifier
           .fillMaxWidth()
-          .clickable { }
+          .clickable { navController.navigate("profile") }
           .padding(vertical = 8.dp)
       )
 
@@ -62,7 +62,7 @@ fun DrawerContent(navController: NavHostController, onSendNotification: () -> Un
         text = "Sair",
         color = MaterialTheme.colorScheme.error,
         modifier = Modifier
-          .clickable { }
+          .clickable {}
           .padding(vertical = 8.dp)
       )
 

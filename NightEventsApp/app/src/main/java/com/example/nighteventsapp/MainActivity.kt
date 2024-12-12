@@ -26,6 +26,7 @@ import com.example.nighteventsapp.ui.components.TopBar
 import com.example.nighteventsapp.ui.screens.EventDetailsScreen
 import com.example.nighteventsapp.ui.screens.FavoritesScreen
 import com.example.nighteventsapp.ui.screens.HomeScreen
+import com.example.nighteventsapp.ui.screens.ProfileScreen
 import com.example.nighteventsapp.ui.screens.SubscribedEventsScreen
 import com.example.nighteventsapp.ui.theme.NightEventsAppTheme
 import kotlinx.coroutines.launch
@@ -67,6 +68,7 @@ class MainActivity : ComponentActivity() {
                 composable("home") { HomeScreen(navController, context = LocalContext.current) }
                 composable("events") { SubscribedEventsScreen(navController) }
                 composable("favorites") { FavoritesScreen(navController) }
+                composable("profile") { ProfileScreen(navController) }
                 composable("eventDetails/{eventId}") { backStackEntry ->
                   val eventId = backStackEntry.arguments?.getString("eventId")
                   EventDetailsScreen(eventId = eventId)
