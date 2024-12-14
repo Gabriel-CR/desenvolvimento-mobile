@@ -1,110 +1,71 @@
 package com.example.iplay
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import android.graphics.Color
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.iplay.ui.components.BottomBar
+import com.example.iplay.ui.components.DrawerContent
+import com.example.iplay.ui.components.TopBar
+import com.example.iplay.ui.screens.ConfigurationScreen
+import com.example.iplay.ui.screens.FavouritesScreen
+import com.example.iplay.ui.screens.GamesScreen
+import com.example.iplay.ui.screens.HomeScreen
+import com.example.iplay.ui.screens.ProfileScreen
 import com.example.iplay.ui.theme.IPlayTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    enableEdgeToEdge()
     setContent {
-      IPlayTheme {
-        IPlay()
+      val navController = rememberNavController()
+      val drawerState = rememberDrawerState(DrawerValue.Closed)
+      val scope = rememberCoroutineScope()
+      val isDarkTheme = isSystemInDarkTheme()
+      var isDarkThemeManual by remember { mutableStateOf(isDarkTheme) }
+
+      IPlayTheme(darkTheme = isDarkThemeManual) {
+        ModalNavigationDrawer(
+          drawerState = drawerState,
+          gesturesEnabled = true,
+          drawerContent = { DrawerContent(navController) },
+          content = {
+            Scaffold(
+              topBar = { TopBar(navController) },
+              bottomBar = { BottomBar(navController) }
+            ) { innerPadding ->
+              NavHost(
+                navController = navController,
+                startDestination = "home",
+                modifier = Modifier.padding(innerPadding)
+              ) {
+                composable("home") { HomeScreen(navController) }
+                composable("games") { GamesScreen(navController) }
+                composable("favorites") { FavouritesScreen(navController) }
+                composable("profile") { ProfileScreen(navController) }
+                composable("configuration") { ConfigurationScreen(navController) }
+              }
+            }
+          }
+        )
       }
     }
   }
-}
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@ExperimentalMaterial3Api
-@Composable
-fun IPlay() {
-  val imageRes = R.drawable.logo
-  val context = LocalContext.current
-
-  Scaffold(
-    topBar = {
-      TopAppBar(
-        title = { Text("") },
-        actions = {
-          ThreeDotsMenu()
-        }
-      )
-    }
-  ) { innerPadding ->
-    Column(
-      modifier = Modifier
-        .fillMaxSize()
-        .padding(innerPadding),
-      horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-      Image(
-        painter = painterResource(id = imageRes),
-        contentDescription = "Logo",
-        modifier = Modifier.size(200.dp)
-      )
-
-      Spacer(modifier = Modifier.height(16.dp))
-
-      LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.Bottom
-      ) {
-        items(10) { index ->
-          ElevatedCard()
-
-          Spacer(modifier = Modifier.height(10.dp))
-        }
-      }
-    }
-  }
-}
-
-fun showCustomToast(
-  context: Context,
-  message: String,
-  backgroundColor: Int = Color.BLACK,
-  textColor: Int = Color.WHITE,
-  padding: Int = 16,
-  duration: Int = Toast.LENGTH_LONG
-) {
-  val toast = Toast(context)
-  val view = TextView(context).apply {
-    text = message
-    setPadding(padding, padding, padding, padding)
-    setBackgroundColor(backgroundColor)
-    setTextColor(textColor)
-  }
-  toast.view = view
-  toast.duration = duration
-  toast.show()
 }
