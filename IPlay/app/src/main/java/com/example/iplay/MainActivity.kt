@@ -13,18 +13,21 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material3.Text
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.iplay.models.games
 import com.example.iplay.ui.components.BottomBar
 import com.example.iplay.ui.components.DrawerContent
 import com.example.iplay.ui.components.TopBar
 import com.example.iplay.ui.screens.ConfigurationScreen
 import com.example.iplay.ui.screens.FavouritesScreen
+import com.example.iplay.ui.screens.GameDetailsScreen
 import com.example.iplay.ui.screens.GamesScreen
 import com.example.iplay.ui.screens.HomeScreen
 import com.example.iplay.ui.screens.ProfileScreen
@@ -37,7 +40,6 @@ class MainActivity : ComponentActivity() {
     setContent {
       val navController = rememberNavController()
       val drawerState = rememberDrawerState(DrawerValue.Closed)
-      val scope = rememberCoroutineScope()
       val isDarkTheme = isSystemInDarkTheme()
       var isDarkThemeManual by remember { mutableStateOf(isDarkTheme) }
 
@@ -61,6 +63,18 @@ class MainActivity : ComponentActivity() {
                 composable("favorites") { FavouritesScreen(navController) }
                 composable("profile") { ProfileScreen(navController) }
                 composable("configuration") { ConfigurationScreen(navController) }
+                composable(
+                  route = "gameDetails/{gameId}",
+                  arguments = listOf(navArgument("gameId") { type = NavType.IntType })
+                ) { backStackEntry ->
+                  val gameId = backStackEntry.arguments?.getInt("gameId")
+                  val game = games.find { it.id == gameId }
+                  if (game != null) {
+                    GameDetailsScreen(game)
+                  } else {
+                    Text("Jogo não encontrado.")
+                  }
+                }
               }
             }
           }
