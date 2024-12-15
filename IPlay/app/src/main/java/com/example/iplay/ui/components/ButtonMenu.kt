@@ -1,4 +1,4 @@
-package com.example.iplay
+package com.example.iplay.ui.components
 
 import android.annotation.SuppressLint
 import android.content.Context
