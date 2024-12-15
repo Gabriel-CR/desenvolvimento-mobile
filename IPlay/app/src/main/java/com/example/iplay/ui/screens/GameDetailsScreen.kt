@@ -29,6 +29,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,6 +47,8 @@ import com.example.iplay.models.Game
 fun GameDetailsScreen(
   game: Game
 ) {
+  var isFavorite by remember { mutableStateOf(game.isFavorite) }
+
   Column(
     modifier = Modifier
       .fillMaxSize()
@@ -100,17 +106,17 @@ fun GameDetailsScreen(
           .padding(16.dp)
       ) {
         Button(
-          onClick = { /* Ação para ouvir áudio */ },
+          onClick = { isFavorite = !isFavorite },
           modifier = Modifier.fillMaxWidth(),
           colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
         ) {
           Icon(
-            imageVector = if (game.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+            imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
             contentDescription = null,
             modifier = Modifier.size(20.dp)
           )
           Spacer(modifier = Modifier.width(8.dp))
-          Text(if (game.isFavorite) "Remover Favoritos" else "Adicionar Favoritos")
+          Text(if (isFavorite) "Remover Favoritos" else "Adicionar Favoritos")
         }
 
         Button(
