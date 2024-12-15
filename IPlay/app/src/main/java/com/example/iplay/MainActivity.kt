@@ -13,15 +13,12 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.material3.Text
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import com.example.iplay.models.games
+import com.example.iplay.models.GameViewModel
 import com.example.iplay.ui.components.BottomBar
 import com.example.iplay.ui.components.DrawerContent
 import com.example.iplay.ui.components.TopBar
@@ -43,6 +40,7 @@ class MainActivity : ComponentActivity() {
       val drawerState = rememberDrawerState(DrawerValue.Closed)
       val isDarkTheme = isSystemInDarkTheme()
       var isDarkThemeManual by remember { mutableStateOf(isDarkTheme) }
+      val gameViewModel = GameViewModel()
 
       IPlayTheme(darkTheme = isDarkThemeManual) {
         ModalNavigationDrawer(
@@ -61,20 +59,15 @@ class MainActivity : ComponentActivity() {
               ) {
                 composable("home") { HomeScreen(navController) }
                 composable("games") { GamesScreen(navController) }
-                composable("favorites") { FavouritesScreen(navController) }
+                composable("favorites") { FavouritesScreen(navController, gameViewModel) }
                 composable("profile") { ProfileScreen(navController) }
                 composable("configuration") { ConfigurationScreen(navController) }
                 composable("logout") { LogoutScreen(navController) }
-                composable(
-                  route = "gameDetails/{gameId}",
-                  arguments = listOf(navArgument("gameId") { type = NavType.IntType })
-                ) { backStackEntry ->
-                  val gameId = backStackEntry.arguments?.getInt("gameId")
-                  val game = games.find { it.id == gameId }
+                composable("gameDetails/{gameId}") { backStackEntry ->
+                  val gameId = backStackEntry.arguments?.getString("gameId")?.toIntOrNull()
+                  val game = gameViewModel.gamesView.value.find { it.id == gameId }
                   if (game != null) {
-                    GameDetailsScreen(game)
-                  } else {
-                    Text("Jogo não encontrado.")
+                    GameDetailsScreen(game, gameViewModel)
                   }
                 }
               }

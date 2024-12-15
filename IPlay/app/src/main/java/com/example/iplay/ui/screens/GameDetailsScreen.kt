@@ -42,10 +42,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.iplay.models.Game
+import com.example.iplay.models.GameViewModel
 
 @Composable
 fun GameDetailsScreen(
-  game: Game
+  game: Game,
+  gameViewModel: GameViewModel
 ) {
   var isFavorite by remember { mutableStateOf(game.isFavorite) }
 
@@ -106,7 +108,10 @@ fun GameDetailsScreen(
           .padding(16.dp)
       ) {
         Button(
-          onClick = { isFavorite = !isFavorite },
+          onClick = {
+            gameViewModel.toggleFavorite(game.id)
+            isFavorite = !isFavorite
+          },
           modifier = Modifier.fillMaxWidth(),
           colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
         ) {
