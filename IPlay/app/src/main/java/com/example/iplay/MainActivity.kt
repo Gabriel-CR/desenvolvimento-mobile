@@ -30,6 +30,7 @@ import com.example.iplay.ui.screens.FavouritesScreen
 import com.example.iplay.ui.screens.GameDetailsScreen
 import com.example.iplay.ui.screens.GamesScreen
 import com.example.iplay.ui.screens.HomeScreen
+import com.example.iplay.ui.screens.LogoutScreen
 import com.example.iplay.ui.screens.ProfileScreen
 import com.example.iplay.ui.theme.IPlayTheme
 
@@ -63,6 +64,7 @@ class MainActivity : ComponentActivity() {
                 composable("favorites") { FavouritesScreen(navController) }
                 composable("profile") { ProfileScreen(navController) }
                 composable("configuration") { ConfigurationScreen(navController) }
+                composable("logout") { LogoutScreen(navController) }
                 composable(
                   route = "gameDetails/{gameId}",
                   arguments = listOf(navArgument("gameId") { type = NavType.IntType })

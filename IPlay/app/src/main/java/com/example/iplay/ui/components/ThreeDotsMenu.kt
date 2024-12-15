@@ -31,7 +31,7 @@ fun ThreeDotsMenu(
     expanded = expanded,
     onDismissRequest = { expanded = false },
     modifier = Modifier
-      .background(MaterialTheme.colorScheme.surface) // Ajusta o fundo se necessário
+      .background(MaterialTheme.colorScheme.surface)
   ) {
     DropdownMenuItem(
       text = { Text("Tela Inicial") },
@@ -54,6 +54,14 @@ fun ThreeDotsMenu(
       onClick = {
         expanded = false
         navController.navigate("configuration")
+      }
+    )
+
+    DropdownMenuItem(
+      text = { Text("Logout") },
+      onClick = {
+        expanded = false
+        navController.navigate("logout")
       }
     )
   }
