@@ -55,7 +55,6 @@ fun LoginScreen(
 
       Button(
         onClick = {
-          // Simula navegação após o login
           navController.navigate("home") {
             popUpTo("login") { inclusive = true }
           }

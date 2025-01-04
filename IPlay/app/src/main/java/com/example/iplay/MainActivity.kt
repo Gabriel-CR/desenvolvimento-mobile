@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.iplay.models.GameViewModel
 import com.example.iplay.ui.components.BottomBar
@@ -42,6 +43,8 @@ class MainActivity : ComponentActivity() {
       val isDarkTheme = isSystemInDarkTheme()
       var isDarkThemeManual by remember { mutableStateOf(isDarkTheme) }
       val gameViewModel = GameViewModel()
+      val currentBackStackEntry = navController.currentBackStackEntryAsState()
+      val currentRoute = currentBackStackEntry.value?.destination?.route
 
       IPlayTheme(darkTheme = isDarkThemeManual) {
         ModalNavigationDrawer(
@@ -50,8 +53,12 @@ class MainActivity : ComponentActivity() {
           drawerContent = { DrawerContent(navController) },
           content = {
             Scaffold(
-              topBar = { TopBar(navController) },
-              bottomBar = { BottomBar(navController) }
+              topBar = {
+                if (currentRoute != "login") { TopBar(navController) }
+              },
+              bottomBar = {
+                if (currentRoute != "login") { BottomBar(navController) }
+              }
             ) { innerPadding ->
               NavHost(
                 navController = navController,

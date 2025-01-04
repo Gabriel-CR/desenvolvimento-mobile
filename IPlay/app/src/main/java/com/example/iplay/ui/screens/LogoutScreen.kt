@@ -15,11 +15,9 @@ import kotlinx.coroutines.delay
 fun LogoutScreen(
   navController: NavController
 ) {
-  // Simula o estado de carregamento durante o logout
   var isLoading by remember { mutableStateOf(true) }
 
   LaunchedEffect(Unit) {
-    // Simula o tempo necessário para processar o logout
     delay(2000) // 2 segundos
     isLoading = false
     navController.navigate("login") {
