@@ -84,9 +84,9 @@ fun TasksScreen(viewModel: TasksViewModel = TasksViewModel(LocalContext.current)
           }
         }
 
-        AddTaskSection(onAddTask = { name, category, priority ->
-          viewModel.addTask(Task(name, false, category, priority))
-        })
+        AddTaskSection { name, category, priority, dueDate ->
+          viewModel.addTask(Task(name, false, category, priority, dueDate))
+        }
       }
     }
   }

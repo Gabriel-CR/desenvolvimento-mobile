@@ -7,5 +7,6 @@ data class Task(
   val name: String,
   val isCompleted: Boolean = false,
   val category: TaskCategory = TaskCategory.CASA,
-  val priority: TaskPriority = TaskPriority.MEDIA
+  val priority: TaskPriority = TaskPriority.MEDIA,
+  val dueDate: String? = null
 )
