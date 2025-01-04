@@ -3,6 +3,7 @@ package com.example.iplay.ui.screens
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Event
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 
 sealed class BottomBarScreen(
@@ -32,9 +33,21 @@ sealed class BottomBarScreen(
     },
     label = "Perfil"
   )
+
+  object Search : BottomBarScreen(
+    route = "search",
+    icon = {
+      androidx.compose.material3.Icon(
+        Icons.Default.Search,
+        contentDescription = "Buscar"
+      )
+    },
+    label = "Buscar"
+  )
 }
 
 val screens = listOf(
   BottomBarScreen.Games,
-  BottomBarScreen.Profile
+  BottomBarScreen.Profile,
+  BottomBarScreen.Search
 )

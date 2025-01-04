@@ -31,6 +31,7 @@ import com.example.iplay.ui.screens.HomeScreen
 import com.example.iplay.ui.screens.LoginScreen
 import com.example.iplay.ui.screens.LogoutScreen
 import com.example.iplay.ui.screens.ProfileScreen
+import com.example.iplay.ui.screens.SearchScreen
 import com.example.iplay.ui.theme.IPlayTheme
 
 @ExperimentalMaterial3Api
@@ -70,6 +71,7 @@ class MainActivity : ComponentActivity() {
                 composable("games") { GamesScreen(navController) }
                 composable("favorites") { FavouritesScreen(navController, gameViewModel) }
                 composable("profile") { ProfileScreen(navController) }
+                composable("search") { SearchScreen(navController) }
                 composable("configuration") { ConfigurationScreen(navController) }
                 composable("logout") { LogoutScreen(navController) }
                 composable("gameDetails/{gameId}") { backStackEntry ->
