@@ -78,13 +78,8 @@ fun ProfileScreen(
           horizontalAlignment = Alignment.CenterHorizontally,
           modifier = Modifier.fillMaxWidth()
         ) {
-          Button(
-            onClick = { navController.navigate("edit_profile") },
-            modifier = Modifier.fillMaxWidth()
-          ) {
-            Text("Editar Perfil")
-          }
           Spacer(modifier = Modifier.height(16.dp))
+
           Button(
             onClick = { navController.navigate("logout") },
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
@@ -100,4 +95,3 @@ fun ProfileScreen(
     }
   }
 }
-
