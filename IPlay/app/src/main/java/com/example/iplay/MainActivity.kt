@@ -27,6 +27,7 @@ import com.example.iplay.ui.screens.FavouritesScreen
 import com.example.iplay.ui.screens.GameDetailsScreen
 import com.example.iplay.ui.screens.GamesScreen
 import com.example.iplay.ui.screens.HomeScreen
+import com.example.iplay.ui.screens.LoginScreen
 import com.example.iplay.ui.screens.LogoutScreen
 import com.example.iplay.ui.screens.ProfileScreen
 import com.example.iplay.ui.theme.IPlayTheme
@@ -54,9 +55,10 @@ class MainActivity : ComponentActivity() {
             ) { innerPadding ->
               NavHost(
                 navController = navController,
-                startDestination = "home",
+                startDestination = "login",
                 modifier = Modifier.padding(innerPadding)
               ) {
+                composable("login") { LoginScreen(navController) }
                 composable("home") { HomeScreen(navController) }
                 composable("games") { GamesScreen(navController) }
                 composable("favorites") { FavouritesScreen(navController, gameViewModel) }
