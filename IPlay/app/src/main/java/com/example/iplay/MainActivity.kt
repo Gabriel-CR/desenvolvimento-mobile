@@ -27,6 +27,7 @@ import com.example.iplay.ui.screens.ConfigurationScreen
 import com.example.iplay.ui.screens.FavouritesScreen
 import com.example.iplay.ui.screens.GameDetailsScreen
 import com.example.iplay.ui.screens.GamesScreen
+import com.example.iplay.ui.screens.HelpScreen
 import com.example.iplay.ui.screens.HomeScreen
 import com.example.iplay.ui.screens.LoginScreen
 import com.example.iplay.ui.screens.LogoutScreen
@@ -73,6 +74,7 @@ class MainActivity : ComponentActivity() {
                 composable("profile") { ProfileScreen(navController) }
                 composable("search") { SearchScreen(navController) }
                 composable("configuration") { ConfigurationScreen(navController) }
+                composable("help") { HelpScreen(navController) }
                 composable("logout") { LogoutScreen(navController) }
                 composable("gameDetails/{gameId}") { backStackEntry ->
                   val gameId = backStackEntry.arguments?.getString("gameId")?.toIntOrNull()

@@ -58,6 +58,14 @@ fun ThreeDotsMenu(
     )
 
     DropdownMenuItem(
+      text = { Text("Ajuda") },
+      onClick = {
+        expanded = false
+        navController.navigate("help")
+      }
+    )
+
+    DropdownMenuItem(
       text = { Text("Logout") },
       onClick = {
         expanded = false
