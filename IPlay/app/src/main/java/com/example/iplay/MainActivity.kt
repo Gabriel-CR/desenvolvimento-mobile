@@ -24,7 +24,6 @@ import com.example.iplay.models.GameViewModel
 import com.example.iplay.ui.components.BottomBar
 import com.example.iplay.ui.components.DrawerContent
 import com.example.iplay.ui.components.TopBar
-import com.example.iplay.ui.screens.ConfigurationScreen
 import com.example.iplay.ui.screens.FavouritesScreen
 import com.example.iplay.ui.screens.GameDetailsScreen
 import com.example.iplay.ui.screens.GamesScreen
@@ -34,6 +33,7 @@ import com.example.iplay.ui.screens.LoginScreen
 import com.example.iplay.ui.screens.LogoutScreen
 import com.example.iplay.ui.screens.ProfileScreen
 import com.example.iplay.ui.screens.SearchScreen
+import com.example.iplay.ui.screens.SettingsScreen
 import com.example.iplay.ui.screens.VideoPlayerScreen
 import com.example.iplay.ui.theme.IPlayTheme
 
@@ -49,6 +49,7 @@ class MainActivity : ComponentActivity() {
       val gameViewModel: GameViewModel = viewModel()
       val currentBackStackEntry = navController.currentBackStackEntryAsState()
       val currentRoute = currentBackStackEntry.value?.destination?.route
+      var areNotificationsEnabled by remember { mutableStateOf(true) }
 
       IPlayTheme(darkTheme = isDarkThemeManual) {
         ModalNavigationDrawer(
@@ -75,7 +76,21 @@ class MainActivity : ComponentActivity() {
                 composable("favorites") { FavouritesScreen(navController, gameViewModel) }
                 composable("profile") { ProfileScreen(navController) }
                 composable("search") { SearchScreen(navController, gameViewModel) }
-                composable("configuration") { ConfigurationScreen(navController) }
+                composable("settings") {
+                  SettingsScreen(
+                    navController,
+                    isDarkModeEnabled = isDarkThemeManual,
+                    areNotificationsEnabled = areNotificationsEnabled,
+                    onToggleDarkMode = { isDarkThemeManual = it },
+                    onToggleNotifications = { areNotificationsEnabled = it },
+                    onClearFavorites = { /* Lógica para limpar favoritos */ },
+                    onResetPreferences = {
+                      isDarkThemeManual = false
+                      areNotificationsEnabled = true
+                      /* Outras ações de redefinição */
+                    }
+                  )
+                }
                 composable("help") { HelpScreen(navController) }
                 composable("logout") { LogoutScreen(navController) }
                 composable("videoPlayer/{videoResId}") { backStackEntry ->

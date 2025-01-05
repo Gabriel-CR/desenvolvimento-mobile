@@ -53,7 +53,7 @@ fun ThreeDotsMenu(
       text = { Text("Configurações") },
       onClick = {
         expanded = false
-        navController.navigate("configuration")
+        navController.navigate("settings")
       }
     )
 

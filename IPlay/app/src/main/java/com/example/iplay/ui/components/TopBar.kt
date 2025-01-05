@@ -34,6 +34,7 @@ fun TopBar(
         Text(
           text = "I Play",
           style = MaterialTheme.typography.titleLarge,
+          color = MaterialTheme.colorScheme.primary,
           maxLines = 1,
           overflow = TextOverflow.Ellipsis
         )
