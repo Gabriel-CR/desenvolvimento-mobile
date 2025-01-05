@@ -34,6 +34,7 @@ import com.example.iplay.ui.screens.LoginScreen
 import com.example.iplay.ui.screens.LogoutScreen
 import com.example.iplay.ui.screens.ProfileScreen
 import com.example.iplay.ui.screens.SearchScreen
+import com.example.iplay.ui.screens.VideoPlayerScreen
 import com.example.iplay.ui.theme.IPlayTheme
 
 @ExperimentalMaterial3Api
@@ -57,10 +58,10 @@ class MainActivity : ComponentActivity() {
           content = {
             Scaffold(
               topBar = {
-                if (currentRoute != "login") { TopBar(navController) }
+                if (currentRoute != "login" && currentRoute != "videoPlayer/{videoResId}") { TopBar(navController) }
               },
               bottomBar = {
-                if (currentRoute != "login") { BottomBar(navController) }
+                if (currentRoute != "login" && currentRoute != "videoPlayer/{videoResId}") { BottomBar(navController) }
               }
             ) { innerPadding ->
               NavHost(
@@ -77,11 +78,15 @@ class MainActivity : ComponentActivity() {
                 composable("configuration") { ConfigurationScreen(navController) }
                 composable("help") { HelpScreen(navController) }
                 composable("logout") { LogoutScreen(navController) }
+                composable("videoPlayer/{videoResId}") { backStackEntry ->
+                  val videoResId = backStackEntry.arguments?.getString("videoResId")?.toInt() ?: 0
+                  VideoPlayerScreen(videoResId, navController)
+                }
                 composable("gameDetails/{gameId}") { backStackEntry ->
                   val gameId = backStackEntry.arguments?.getString("gameId")?.toIntOrNull()
                   val game = gameViewModel.gamesView.value.find { it.id == gameId }
                   if (game != null) {
-                    GameDetailsScreen(game, gameViewModel)
+                    GameDetailsScreen(game, gameViewModel, navController)
                   }
                 }
               }
