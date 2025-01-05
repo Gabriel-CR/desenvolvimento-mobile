@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -44,7 +45,7 @@ class MainActivity : ComponentActivity() {
       val drawerState = rememberDrawerState(DrawerValue.Closed)
       val isDarkTheme = isSystemInDarkTheme()
       var isDarkThemeManual by remember { mutableStateOf(isDarkTheme) }
-      val gameViewModel = GameViewModel()
+      val gameViewModel: GameViewModel = viewModel()
       val currentBackStackEntry = navController.currentBackStackEntryAsState()
       val currentRoute = currentBackStackEntry.value?.destination?.route
 
@@ -68,11 +69,11 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier.padding(innerPadding)
               ) {
                 composable("login") { LoginScreen(navController) }
-                composable("home") { HomeScreen(navController) }
-                composable("games") { GamesScreen(navController) }
+                composable("home") { HomeScreen(navController, gameViewModel) }
+                composable("games") { GamesScreen(navController, gameViewModel) }
                 composable("favorites") { FavouritesScreen(navController, gameViewModel) }
                 composable("profile") { ProfileScreen(navController) }
-                composable("search") { SearchScreen(navController) }
+                composable("search") { SearchScreen(navController, gameViewModel) }
                 composable("configuration") { ConfigurationScreen(navController) }
                 composable("help") { HelpScreen(navController) }
                 composable("logout") { LogoutScreen(navController) }

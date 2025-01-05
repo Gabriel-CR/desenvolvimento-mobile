@@ -21,14 +21,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.iplay.models.games
+import com.example.iplay.models.GameViewModel
 import com.example.iplay.ui.components.CardView
 
 @Composable
 fun SearchScreen(
-  navController: NavHostController
+  navController: NavHostController,
+  viewModel: GameViewModel
 ) {
   var searchText by remember { mutableStateOf("") }
+  val games by viewModel.gamesView
 
   val filteredGames = remember(searchText) {
     games.filter { game ->
