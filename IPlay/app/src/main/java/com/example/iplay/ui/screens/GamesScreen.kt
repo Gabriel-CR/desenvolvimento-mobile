@@ -25,6 +25,7 @@ import com.example.iplay.models.Game
 import com.example.iplay.models.GameViewModel
 import com.example.iplay.ui.components.DatePickerField
 import com.example.iplay.ui.components.TimePickerField
+import com.example.iplay.ui.theme.ButtonPrimaryColors
 
 @Composable
 fun GamesScreen(
@@ -103,7 +104,8 @@ fun GamesScreen(
         viewModel.addGame(newGame)
         navController.navigate("home")
       },
-      modifier = Modifier.align(Alignment.CenterHorizontally)
+      modifier = Modifier.align(Alignment.CenterHorizontally),
+      colors = ButtonPrimaryColors
     ) {
       Text("Criar Jogo")
     }

@@ -76,7 +76,7 @@ fun FavoriteGameItem(
         Icon(
           imageVector = if (game.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
           contentDescription = null,
-          tint = if (game.isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+          tint = MaterialTheme.colorScheme.primary
         )
       }
     }

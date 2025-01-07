@@ -30,8 +30,6 @@ fun ThreeDotsMenu(
   DropdownMenu(
     expanded = expanded,
     onDismissRequest = { expanded = false },
-    modifier = Modifier
-      .background(MaterialTheme.colorScheme.surface)
   ) {
     DropdownMenuItem(
       text = { Text("Tela Inicial") },

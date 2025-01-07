@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import com.example.iplay.ui.theme.ButtonTransparentBorder
 import java.util.*
 
 @SuppressLint("DefaultLocale")
@@ -20,7 +21,8 @@ fun TimePickerField(
 
   OutlinedButton(
     onClick = { showTimePicker = true },
-    modifier = Modifier.fillMaxWidth()
+    modifier = Modifier.fillMaxWidth(),
+    border = ButtonTransparentBorder
   ) {
     Text(text = if (selectedTime.isNotEmpty()) selectedTime else "Selecionar Horário")
   }

@@ -151,6 +151,12 @@ class GameViewModel : ViewModel() {
     }
   }
 
+  fun clearFavorite() {
+    _games.value = _games.value.map {
+      it.copy(isFavorite = false)
+    }
+  }
+
   fun getGamesSize(): Int {
     return _games.value.size
   }

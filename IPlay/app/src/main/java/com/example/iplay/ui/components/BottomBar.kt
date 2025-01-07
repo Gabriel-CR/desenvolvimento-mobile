@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.iplay.ui.screens.screens
+import com.example.iplay.ui.theme.NavigationBarColors
 
 @Composable
 fun BottomBar(
@@ -32,10 +33,7 @@ fun BottomBar(
         label = {
           Text(screen.label)
         },
-        colors = NavigationBarItemDefaults.colors(
-          selectedIconColor = MaterialTheme.colorScheme.primary,
-          unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        colors = NavigationBarColors
       )
     }
   }

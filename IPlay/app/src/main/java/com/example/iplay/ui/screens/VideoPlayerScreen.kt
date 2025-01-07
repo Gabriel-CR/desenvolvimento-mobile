@@ -69,7 +69,7 @@ fun VideoPlayerScreen(
       Icon(
         imageVector = Icons.Default.ArrowBack,
         contentDescription = "Voltar",
-        tint = MaterialTheme.colorScheme.onSurface
+        tint = MaterialTheme.colorScheme.primary
       )
     }
   }

@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.iplay.models.Game
+import com.example.iplay.ui.theme.SecondaryTextColor
 
 @Composable
 fun CardView(
@@ -56,7 +57,11 @@ fun CardView(
           fontWeight = FontWeight.Bold
         )
         Text(text = game.sport, style = MaterialTheme.typography.bodyMedium)
-        Text(text = "${game.date} - ${game.time}", style = MaterialTheme.typography.bodySmall)
+        Text(
+          text = "${game.date} - ${game.time}",
+          style = MaterialTheme.typography.bodySmall,
+          color = SecondaryTextColor
+        )
       }
     }
   }

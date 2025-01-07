@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,12 +36,17 @@ fun FavouritesScreen(
   Scaffold(
     topBar = {
       TopAppBar(
-        title = { Text("Favoritos") },
+        title = { Text(text = "Favoritos", color = MaterialTheme.colorScheme.primary) },
         navigationIcon = {
           IconButton(onClick = { navController.navigateUp() }) {
-            Icon(Icons.Default.ArrowBack, contentDescription = "Voltar")
+            Icon(
+              Icons.Default.ArrowBack,
+              contentDescription = "Voltar",
+              tint = MaterialTheme.colorScheme.primary
+            )
           }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.background)
       )
     },
     content = { innerPadding ->
@@ -54,7 +60,7 @@ fun FavouritesScreen(
           Text(
             text = "Nenhum item favoritado ainda.",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.primary
           )
         }
       } else {

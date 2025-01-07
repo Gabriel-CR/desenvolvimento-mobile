@@ -1,6 +1,7 @@
 package com.example.iplay.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,7 +21,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -45,6 +45,9 @@ import com.example.iplay.R
 import com.example.iplay.models.Game
 import com.example.iplay.models.GameViewModel
 import com.example.iplay.ui.components.VideoCard
+import com.example.iplay.ui.theme.ButtonPrimaryColors
+import com.example.iplay.ui.theme.CardTransparentBorder
+import com.example.iplay.ui.theme.CardTransparentColors
 
 @Composable
 fun GameDetailsScreen(
@@ -100,9 +103,9 @@ fun GameDetailsScreen(
     Card(
       modifier = Modifier
         .fillMaxWidth()
-        .padding(16.dp),
-      elevation = CardDefaults.cardElevation(8.dp),
-      colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        .padding(16.dp)
+        .border(CardTransparentBorder, shape = MaterialTheme.shapes.medium),
+      elevation = CardDefaults.cardElevation(8.dp)
     ) {
       Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -116,7 +119,7 @@ fun GameDetailsScreen(
             isFavorite = !isFavorite
           },
           modifier = Modifier.fillMaxWidth(),
-          colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+          colors = ButtonPrimaryColors
         ) {
           Icon(
             imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,

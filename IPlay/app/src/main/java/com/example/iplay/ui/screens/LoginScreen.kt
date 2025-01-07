@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.iplay.ui.theme.ButtonPrimaryColors
+import com.example.iplay.ui.theme.PrimaryTextColor
 
 @Composable
 fun LoginScreen(
@@ -32,14 +34,15 @@ fun LoginScreen(
     ) {
       Text(
         text = "Login",
-        style = MaterialTheme.typography.titleLarge
+        style = MaterialTheme.typography.titleLarge,
+        color = PrimaryTextColor
       )
       Spacer(modifier = Modifier.height(32.dp))
 
       OutlinedTextField(
         value = username,
         onValueChange = { username = it },
-        label = { Text("Nome de Usuário") },
+        label = { Text(text = "Nome de Usuário") },
         modifier = Modifier.fillMaxWidth()
       )
       Spacer(modifier = Modifier.height(16.dp))
@@ -59,9 +62,10 @@ fun LoginScreen(
             popUpTo("login") { inclusive = true }
           }
         },
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        colors = ButtonPrimaryColors
       ) {
-        Text("Entrar")
+        Text(text = "Entrar")
       }
     }
   }

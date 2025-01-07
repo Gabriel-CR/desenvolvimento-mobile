@@ -44,7 +44,6 @@ class MainActivity : ComponentActivity() {
       val gameViewModel: GameViewModel = viewModel()
       val currentBackStackEntry = navController.currentBackStackEntryAsState()
       val currentRoute = currentBackStackEntry.value?.destination?.route
-      var areNotificationsEnabled by remember { mutableStateOf(true) }
 
       IPlayTheme(darkTheme = isDarkThemeManual) {
         Scaffold(
@@ -74,14 +73,10 @@ class MainActivity : ComponentActivity() {
               SettingsScreen(
                 navController,
                 isDarkModeEnabled = isDarkThemeManual,
-                areNotificationsEnabled = areNotificationsEnabled,
                 onToggleDarkMode = { isDarkThemeManual = it },
-                onToggleNotifications = { areNotificationsEnabled = it },
-                onClearFavorites = { /* Lógica para limpar favoritos */ },
+                onClearFavorites = { gameViewModel.clearFavorite() },
                 onResetPreferences = {
-                  isDarkThemeManual = false
-                  areNotificationsEnabled = true
-                  /* Outras ações de redefinição */
+                  isDarkThemeManual = isDarkTheme
                 }
               )
             }
