@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 
 // Tema escuro
 private val DarkColorScheme = darkColorScheme(
-  primary = Blue80,
+  primary = Blue40,
   onPrimary = White80,
   secondary = Green80,
   onSecondary = White80,
@@ -33,13 +33,13 @@ private val DarkColorScheme = darkColorScheme(
 
 // Tema claro
 private val LightColorScheme = lightColorScheme(
-  primary = Blue40,
-  onPrimary = Black,
+  primary = Blue80,
+  onPrimary = White80,
   secondary = Green40,
   onSecondary = White40,
   background = White80,
   surface = White80,
-  onBackground = Blue40,
+  onBackground = Black,
   onSurface = Blue40
 )
 
@@ -115,7 +115,7 @@ val PrimaryTextColor: Color
 
 // Textos secundários
 val SecondaryTextColor: Color
-  @Composable get() = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+  @Composable get() = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
 
 // Ícones
 val IconColor: Color

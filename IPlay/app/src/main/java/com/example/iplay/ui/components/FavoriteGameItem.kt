@@ -63,12 +63,12 @@ fun FavoriteGameItem(
         Text(
           text = game.name,
           style = MaterialTheme.typography.titleMedium,
-          color = MaterialTheme.colorScheme.onSurface
+          color = MaterialTheme.colorScheme.onBackground
         )
         Text(
           text = game.sport,
           style = MaterialTheme.typography.bodyMedium,
-          color = MaterialTheme.colorScheme.onSurfaceVariant
+          color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
         )
       }
 

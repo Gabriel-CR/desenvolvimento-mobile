@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.iplay.ui.theme.PrimaryTextColor
 
 @Composable
 fun ThreeDotsMenu(
@@ -32,7 +33,7 @@ fun ThreeDotsMenu(
     onDismissRequest = { expanded = false },
   ) {
     DropdownMenuItem(
-      text = { Text("Tela Inicial") },
+      text = { Text(text = "Tela Inicial", color = PrimaryTextColor) },
       onClick = {
         expanded = false
         navController.navigate("home")
@@ -40,7 +41,7 @@ fun ThreeDotsMenu(
     )
 
     DropdownMenuItem(
-      text = { Text("Favoritos") },
+      text = { Text(text = "Favoritos", color = PrimaryTextColor) },
       onClick = {
         expanded = false
         navController.navigate("favorites")
@@ -48,7 +49,7 @@ fun ThreeDotsMenu(
     )
 
     DropdownMenuItem(
-      text = { Text("Configurações") },
+      text = { Text(text = "Configurações", color = PrimaryTextColor) },
       onClick = {
         expanded = false
         navController.navigate("settings")
@@ -56,7 +57,7 @@ fun ThreeDotsMenu(
     )
 
     DropdownMenuItem(
-      text = { Text("Ajuda") },
+      text = { Text(text = "Ajuda", color = PrimaryTextColor) },
       onClick = {
         expanded = false
         navController.navigate("help")
@@ -64,7 +65,7 @@ fun ThreeDotsMenu(
     )
 
     DropdownMenuItem(
-      text = { Text("Logout") },
+      text = { Text(text = "Logout", color = PrimaryTextColor) },
       onClick = {
         expanded = false
         navController.navigate("logout")

@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.iplay.R
+import com.example.iplay.ui.theme.PrimaryTextColor
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,7 +36,7 @@ fun TopBar(
         Text(
           text = "I Play",
           style = MaterialTheme.typography.titleLarge,
-          color = MaterialTheme.colorScheme.primary,
+          color = PrimaryTextColor,
           maxLines = 1,
           overflow = TextOverflow.Ellipsis
         )
