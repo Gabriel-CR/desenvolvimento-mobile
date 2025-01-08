@@ -17,13 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.iplay.models.UserViewModel
 import com.example.iplay.ui.theme.ButtonSecondaryColors
 
 @Composable
 fun ProfileScreen(
-  navController: NavController
+  navController: NavController,
+  userViewModel: UserViewModel
 ) {
-  val userName = "João Silva"
+  val userName = userViewModel.getName()
   val favoriteSports = listOf("Futebol", "Basquete", "Vôlei")
   val upcomingGames = listOf(
     "Futebol - Domingo, 14:00",

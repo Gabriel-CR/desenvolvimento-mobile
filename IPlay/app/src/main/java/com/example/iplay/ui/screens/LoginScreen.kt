@@ -10,17 +10,21 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.iplay.models.UserViewModel
 import com.example.iplay.ui.theme.ButtonPrimaryColors
 import com.example.iplay.ui.theme.PrimaryTextColor
 
 @Composable
 fun LoginScreen(
-  navController: NavController
+  navController: NavController,
+  userViewModel: UserViewModel
 ) {
   var username by remember { mutableStateOf("") }
   var password by remember { mutableStateOf("") }
+  var errorMessage by remember { mutableStateOf("") }
 
   Box(
     modifier = Modifier.fillMaxSize(),
@@ -52,14 +56,31 @@ fun LoginScreen(
         onValueChange = { password = it },
         label = { Text("Senha") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        visualTransformation = PasswordVisualTransformation(),
         modifier = Modifier.fillMaxWidth()
       )
-      Spacer(modifier = Modifier.height(32.dp))
+
+      Spacer(modifier = Modifier.height(16.dp))
+
+      if (errorMessage.isNotEmpty()) {
+        Text(
+          text = errorMessage,
+          color = MaterialTheme.colorScheme.error,
+          style = MaterialTheme.typography.bodyMedium
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+      }
 
       Button(
         onClick = {
-          navController.navigate("home") {
-            popUpTo("login") { inclusive = true }
+          val currentUser = userViewModel.userView.value
+          if (currentUser != null && currentUser.password == password) {
+            userViewModel.updateUser(currentUser.copy(name = username))
+            navController.navigate("home") {
+              popUpTo("login") { inclusive = true }
+            }
+          } else {
+            errorMessage = "Senha incorreta. Por favor, tente novamente."
           }
         },
         modifier = Modifier.fillMaxWidth(),
