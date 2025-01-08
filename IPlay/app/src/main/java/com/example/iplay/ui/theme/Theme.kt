@@ -5,6 +5,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.IconButtonColors
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -100,6 +102,11 @@ val ButtonTransparentBorder: BorderStroke
   @Composable get() = BorderStroke(
     width = 1.dp,
     color = MaterialTheme.colorScheme.primary
+  )
+
+val IconButtonTransparentBorder: IconButtonColors
+  @Composable get() = IconButtonDefaults.iconButtonColors(
+    contentColor = MaterialTheme.colorScheme.primary
   )
 
 // Textos primários

@@ -2,12 +2,19 @@ package com.example.iplay.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -26,6 +33,7 @@ import com.example.iplay.models.GameViewModel
 import com.example.iplay.ui.components.DatePickerField
 import com.example.iplay.ui.components.TimePickerField
 import com.example.iplay.ui.theme.ButtonPrimaryColors
+import com.example.iplay.ui.theme.IconButtonTransparentBorder
 
 @Composable
 fun GamesScreen(
@@ -37,11 +45,14 @@ fun GamesScreen(
   var date by remember { mutableStateOf("") }
   var time by remember { mutableStateOf("") }
   var location by remember { mutableStateOf("") }
+  var playerName by remember { mutableStateOf("") }
+  var players by remember { mutableStateOf<List<String>>(emptyList()) }
 
   Column(
     modifier = Modifier
       .fillMaxSize()
-      .padding(16.dp),
+      .padding(16.dp)
+      .verticalScroll(rememberScrollState()),
     verticalArrangement = Arrangement.spacedBy(16.dp)
   ) {
     Text(
@@ -84,6 +95,33 @@ fun GamesScreen(
       modifier = Modifier.fillMaxWidth()
     )
 
+    Row(
+      modifier = Modifier.fillMaxWidth(),
+      verticalAlignment = Alignment.CenterVertically
+    ) {
+      OutlinedTextField(
+        value = playerName,
+        onValueChange = { playerName = it },
+        label = { Text("Nome do Jogador") },
+        modifier = Modifier.weight(1f)
+      )
+
+      IconButton(
+        onClick = {
+          if (playerName.isNotBlank()) {
+            players = players + playerName
+            playerName = ""
+          }
+        },
+        colors = IconButtonTransparentBorder
+      ) {
+        Icon(
+          imageVector = Icons.Default.Add,
+          contentDescription = "Adicionar Jogador"
+        )
+      }
+    }
+
     Spacer(modifier = Modifier.height(16.dp))
 
     Button(
@@ -95,7 +133,7 @@ fun GamesScreen(
           date = date,
           time = time,
           location = location,
-          players = emptyList(),
+          players = players,
           organizer = "Usuário Atual",
           description = "Novo jogo criado pelo usuário.",
           imageRes = R.drawable.logo,
