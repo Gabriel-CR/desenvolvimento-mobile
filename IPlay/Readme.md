@@ -1,6 +1,6 @@
-# Como user a aplicação
+# Como usar a aplicação
 
-Ao entrar na aplicação, a primeira tela a ser mostrada será a de login. o login é realizado sem a inserção do nome de usuário, mas é necessário adicionar a senha 123456 para acessar a aplicação.
+Na abertura da aplicação, a tela inicial exibida será a de login. Para acessar a aplicação, não é necessário inserir o nome de usuário, apenas a senha '123456'.
 
 ```
 Login: Qualquer nome
