@@ -1,11 +1,13 @@
 plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin.android)
+//  id("dagger.hilt.android.plugin")
+//  id("org.jetbrains.kotlin.kapt")
 }
 
 android {
   namespace = "com.example.postapp"
-  compileSdk = 34
+  compileSdk = 35
 
   defaultConfig {
     applicationId = "com.example.postapp"
@@ -47,6 +49,25 @@ android {
 }
 
 dependencies {
+  // Retrofit
+  implementation("com.squareup.retrofit2:retrofit:2.9.0")
+  implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+  // Jetpack Compose
+  implementation("androidx.compose.ui:ui:1.5.0")
+  implementation("androidx.compose.material:material:1.5.0")
+  implementation("androidx.compose.ui:ui-tooling-preview:1.5.0")
+
+  // Coroutines
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+
+  // Hilt
+  implementation("com.google.dagger:hilt-android:2.45")
+//  kapt("com.google.dagger:hilt-android-compiler:2.45")
+
+  // Lifecycle
+  implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+  implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)
