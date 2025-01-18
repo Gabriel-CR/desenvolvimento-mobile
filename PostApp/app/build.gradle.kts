@@ -1,8 +1,8 @@
 plugins {
-  alias(libs.plugins.android.application)
-  alias(libs.plugins.kotlin.android)
-//  id("dagger.hilt.android.plugin")
-//  id("org.jetbrains.kotlin.kapt")
+  id("com.android.application")
+  id("org.jetbrains.kotlin.android")
+  id("dagger.hilt.android.plugin")
+  id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -63,7 +63,7 @@ dependencies {
 
   // Hilt
   implementation("com.google.dagger:hilt-android:2.45")
-//  kapt("com.google.dagger:hilt-android-compiler:2.45")
+  kapt("com.google.dagger:hilt-android-compiler:2.45")
 
   // Lifecycle
   implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
