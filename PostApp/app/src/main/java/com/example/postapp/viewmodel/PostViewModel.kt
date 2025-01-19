@@ -1,5 +1,6 @@
 package com.example.postapp.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -15,7 +16,7 @@ import kotlinx.coroutines.launch
 class PostViewModel : ViewModel() {
   var posts: List<Post> by mutableStateOf(listOf())
   var users: List<User> by mutableStateOf(listOf())
-  private val userId = 1
+  private val userId: Int = 1
 
   fun fetchUsers() {
     viewModelScope.launch {
@@ -77,6 +78,9 @@ class PostViewModel : ViewModel() {
   }
 
   fun updatePost(postId: Int, title: String, content: String) {
+    Log.d("updatePost", "postId: ${postId}")
+    Log.d("updatePost", "title: ${title}")
+    Log.d("updatePost", "content: ${content}")
     viewModelScope.launch {
       try {
         val updatePost = CreatePostRequest(title, content)

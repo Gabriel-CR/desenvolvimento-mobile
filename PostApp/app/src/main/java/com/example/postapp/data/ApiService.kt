@@ -21,7 +21,7 @@ interface ApiService {
   @POST("users/{user_id}/posts/")
   suspend fun createPost(@Path("user_id") userId: Int, @Body post: CreatePostRequest): Post
 
-  @GET("posts/{user_id}/posts")
+  @GET("users/{user_id}/posts/")
   suspend fun getPosts(@Path("user_id") userId: Int): List<Post>
 
   @PUT("posts/{post_id}")
