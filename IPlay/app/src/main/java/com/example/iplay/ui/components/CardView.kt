@@ -11,11 +11,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -29,7 +34,8 @@ import com.example.iplay.ui.theme.SecondaryTextColor
 @Composable
 fun CardView(
   navController: NavController,
-  game: Game
+  game: Game,
+  onSetNotification: (Game) -> Unit
 ) {
   Card(
     modifier = Modifier
@@ -40,7 +46,7 @@ fun CardView(
     shape = RoundedCornerShape(8.dp),
     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
   ) {
-    Row(modifier = Modifier.padding(16.dp)) {
+    Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
       Image(
         painter = painterResource(id = game.imageRes),
         contentDescription = game.name,
@@ -51,7 +57,7 @@ fun CardView(
 
       Spacer(modifier = Modifier.width(16.dp))
 
-      Column {
+      Column(modifier = Modifier.weight(1f)) {
         Text(
           text = game.name,
           style = MaterialTheme.typography.titleMedium,
@@ -67,6 +73,13 @@ fun CardView(
           text = "${game.date} - ${game.time}",
           style = MaterialTheme.typography.bodySmall,
           color = SecondaryTextColor
+        )
+      }
+
+      IconButton(onClick = { onSetNotification(game) }) {
+        Icon(
+          imageVector = Icons.Default.Notifications,
+          contentDescription = "Set Notification"
         )
       }
     }

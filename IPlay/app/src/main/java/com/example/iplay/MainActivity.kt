@@ -1,5 +1,9 @@
 package com.example.iplay
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -38,6 +42,8 @@ import com.example.iplay.ui.theme.IPlayTheme
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    createNotificationChannel()
+
     setContent {
       val navController = rememberNavController()
       val isDarkTheme = isSystemInDarkTheme()
@@ -98,6 +104,22 @@ class MainActivity : ComponentActivity() {
           }
         }
       }
+    }
+  }
+
+  private fun createNotificationChannel() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      val channel = NotificationChannel(
+        "GAME_CHANNEL",
+        "Lembretes de Jogos",
+        NotificationManager.IMPORTANCE_HIGH
+      ).apply {
+        description = "Notificações para jogos agendados"
+      }
+
+      val notificationManager: NotificationManager =
+        getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+      notificationManager.createNotificationChannel(channel)
     }
   }
 }

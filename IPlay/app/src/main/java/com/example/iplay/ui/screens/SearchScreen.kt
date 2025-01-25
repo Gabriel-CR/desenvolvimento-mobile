@@ -1,5 +1,6 @@
 package com.example.iplay.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,10 +20,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.iplay.models.GameViewModel
 import com.example.iplay.ui.components.CardView
+import com.example.iplay.utils.scheduleNotification
 
 @Composable
 fun SearchScreen(
@@ -31,16 +34,19 @@ fun SearchScreen(
 ) {
   var searchText by remember { mutableStateOf("") }
   val games by viewModel.gamesView
+  val context = LocalContext.current
 
   val filteredGames = remember(searchText) {
     games.filter { game ->
       game.name.contains(searchText, ignoreCase = true) ||
-      game.sport.contains(searchText, ignoreCase = true)
+              game.sport.contains(searchText, ignoreCase = true)
     }
   }
 
   Column(
-    modifier = Modifier.fillMaxSize().padding(16.dp)
+    modifier = Modifier
+      .fillMaxSize()
+      .padding(16.dp)
   ) {
     OutlinedTextField(
       value = searchText,
@@ -66,7 +72,14 @@ fun SearchScreen(
         }
       } else {
         items(filteredGames) { game ->
-          CardView(navController, game)
+          CardView(navController, game, onSetNotification = { selectedGame ->
+            scheduleNotification(context = context, game = selectedGame)
+            Toast.makeText(
+              context,
+              "Notificação agendada para ${selectedGame.name}",
+              Toast.LENGTH_SHORT
+            ).show()
+          })
         }
       }
     }
