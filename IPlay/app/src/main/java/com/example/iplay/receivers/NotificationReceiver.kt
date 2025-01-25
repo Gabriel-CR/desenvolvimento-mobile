@@ -1,6 +1,5 @@
 package com.example.iplay.receivers
 
-import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -9,7 +8,6 @@ import androidx.core.app.NotificationCompat
 import com.example.iplay.R
 
 class NotificationReceiver : BroadcastReceiver() {
-  @SuppressLint("ServiceCast")
   override fun onReceive(context: Context, intent: Intent) {
     val gameName = intent.getStringExtra("GAME_NAME") ?: "Jogo"
     val notificationId = intent.getIntExtra("NOTIFICATION_ID", 0)

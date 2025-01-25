@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -42,7 +43,6 @@ import com.example.iplay.ui.theme.IPlayTheme
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    createNotificationChannel()
 
     setContent {
       val navController = rememberNavController()
@@ -52,6 +52,7 @@ class MainActivity : ComponentActivity() {
       val currentBackStackEntry = navController.currentBackStackEntryAsState()
       val currentRoute = currentBackStackEntry.value?.destination?.route
       val user: UserViewModel = viewModel()
+      createNotificationChannel(LocalContext.current)
 
       IPlayTheme(darkTheme = isDarkThemeManual) {
         Scaffold(
@@ -107,18 +108,17 @@ class MainActivity : ComponentActivity() {
     }
   }
 
-  private fun createNotificationChannel() {
+  fun createNotificationChannel(context: Context) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       val channel = NotificationChannel(
         "GAME_CHANNEL",
         "Lembretes de Jogos",
         NotificationManager.IMPORTANCE_HIGH
       ).apply {
-        description = "Notificações para jogos agendados"
+        description = "Canal para notificações de jogos"
       }
-
       val notificationManager: NotificationManager =
-        getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
       notificationManager.createNotificationChannel(channel)
     }
   }
