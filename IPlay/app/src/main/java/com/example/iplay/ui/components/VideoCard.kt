@@ -16,11 +16,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
@@ -35,8 +35,8 @@ fun VideoCard(
   navController: NavController,
   context: Context
 ) {
-  val thumbnail = remember {
-    getVideoThumbnail(context, videoResId)?.asImageBitmap()
+  val thumbnailState = produceState<Bitmap?>(initialValue = null, videoResId, context) {
+    value = getVideoThumbnail(context, videoResId)
   }
 
   Card(
@@ -53,9 +53,9 @@ fun VideoCard(
           navController.navigate("videoPlayer/$videoResId")
         }
     ) {
-      if (thumbnail != null) {
+      if (thumbnailState.value != null) {
         Image(
-          bitmap = thumbnail,
+          bitmap = thumbnailState.value!!.asImageBitmap(),
           contentDescription = "Thumbnail do vídeo",
           contentScale = ContentScale.Crop,
           modifier = Modifier.fillMaxSize()
@@ -67,9 +67,9 @@ fun VideoCard(
             .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)),
           contentAlignment = Alignment.Center
         ) {
-          Text(
-            text = "Carregando...",
-            style = MaterialTheme.typography.bodySmall
+          CircularProgressIndicator(
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.size(32.dp)
           )
         }
       }

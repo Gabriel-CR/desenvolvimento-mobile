@@ -18,20 +18,31 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.iplay.models.GameViewModel
 import com.example.iplay.ui.components.FavoriteGameItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, DelicateCoroutinesApi::class)
 @Composable
 fun FavouritesScreen(
   navController: NavController,
   gameViewModel: GameViewModel
 ) {
   val favoriteGames = gameViewModel.gamesView.value.filter { it.isFavorite }
+  var isLoading by remember { mutableStateOf(false) }
+  var loadingGameId by remember { mutableStateOf<Int?>(null) }
 
   Scaffold(
     topBar = {
@@ -74,7 +85,17 @@ fun FavouritesScreen(
           items(favoriteGames) { game ->
             FavoriteGameItem(
               game = game,
-              onToggleFavorite = { gameViewModel.toggleFavorite(game.id) },
+              isLoading = isLoading && loadingGameId == game.id,
+              onToggleFavorite = {
+                isLoading = true
+                loadingGameId = game.id
+                CoroutineScope(Dispatchers.Main).launch {
+                  delay(2000)
+                  isLoading = false
+                  loadingGameId = null
+                  gameViewModel.toggleFavorite(game.id)
+                }
+              },
               onNavigateToDetails = { navController.navigate("gameDetails/${game.id}") }
             )
           }
@@ -83,4 +104,3 @@ fun FavouritesScreen(
     }
   )
 }
-

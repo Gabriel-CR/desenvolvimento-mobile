@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -32,6 +33,7 @@ import com.example.iplay.models.Game
 @Composable
 fun FavoriteGameItem(
   game: Game,
+  isLoading: Boolean,
   onToggleFavorite: () -> Unit,
   onNavigateToDetails: () -> Unit
 ) {
@@ -72,13 +74,22 @@ fun FavoriteGameItem(
         )
       }
 
-      IconButton(onClick = { onToggleFavorite() }) {
-        Icon(
-          imageVector = if (game.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-          contentDescription = null,
-          tint = MaterialTheme.colorScheme.primary
+      if (isLoading) {
+        CircularProgressIndicator(
+          modifier = Modifier.size(24.dp),
+          color = MaterialTheme.colorScheme.primary,
+          strokeWidth = 2.dp
         )
+      } else {
+        IconButton(onClick = { onToggleFavorite() }) {
+          Icon(
+            imageVector = if (game.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary
+          )
+        }
       }
     }
   }
 }
+
