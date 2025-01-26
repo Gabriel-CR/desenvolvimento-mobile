@@ -112,7 +112,8 @@ fun CardView(
             contentDescription = "Set Notification",
             modifier = Modifier.graphicsLayer(
               rotationZ = rotation
-            )
+            ),
+            tint = MaterialTheme.colorScheme.primary
           )
         }
       }
