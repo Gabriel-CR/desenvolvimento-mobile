@@ -2,8 +2,6 @@ package com.example.iplay.ui.components
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.media.ThumbnailUtils
-import android.provider.MediaStore
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,7 +25,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import java.io.File
+import com.example.iplay.utils.getVideoThumbnail
 
 @Composable
 fun VideoCard(
@@ -92,23 +90,4 @@ fun VideoCard(
       }
     }
   }
-}
-
-fun getVideoThumbnail(context: Context, rawResId: Int): Bitmap? {
-  val videoFile = copyRawToCache(context, rawResId, "video_$rawResId.mp4")
-  return ThumbnailUtils.createVideoThumbnail(
-    videoFile.absolutePath,
-    MediaStore.Video.Thumbnails.MINI_KIND
-  )
-}
-
-fun copyRawToCache(context: Context, rawResId: Int, fileName: String): File {
-  val inputStream = context.resources.openRawResource(rawResId)
-  val cacheFile = File(context.cacheDir, fileName)
-  inputStream.use { input ->
-    cacheFile.outputStream().use { output ->
-      input.copyTo(output)
-    }
-  }
-  return cacheFile
 }
