@@ -67,6 +67,10 @@ dependencies {
   // DataStore
   implementation("androidx.datastore:datastore-preferences:1.1.2")
 
+  // Animações
+  implementation ("androidx.compose.animation:animation:1.5.0")
+  implementation ("androidx.navigation:navigation-compose:2.7.0")
+
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)
   implementation(libs.androidx.activity.compose)

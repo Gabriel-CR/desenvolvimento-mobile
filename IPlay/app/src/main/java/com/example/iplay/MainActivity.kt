@@ -58,6 +58,7 @@ class MainActivity : ComponentActivity() {
       var isDarkThemeManual by remember { mutableStateOf(isDarkTheme) }
       val gameViewModel: GameViewModel = viewModel()
       val user: UserViewModel = viewModel()
+      createNotificationChannel(LocalContext.current)
 
       val settingVm: SettingsViewModel = viewModel(
         factory = SettingsViewModelFactory(settingsDataStore)

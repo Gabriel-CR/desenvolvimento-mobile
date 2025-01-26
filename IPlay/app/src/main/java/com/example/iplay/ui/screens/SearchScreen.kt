@@ -1,7 +1,15 @@
 package com.example.iplay.ui.screens
 
 import android.widget.Toast
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.with
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,6 +35,7 @@ import com.example.iplay.models.GameViewModel
 import com.example.iplay.ui.components.CardView
 import com.example.iplay.utils.scheduleNotification
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun SearchScreen(
   navController: NavHostController,
@@ -58,28 +67,39 @@ fun SearchScreen(
 
     Spacer(modifier = Modifier.height(16.dp))
 
-    LazyColumn(
-      verticalArrangement = Arrangement.spacedBy(8.dp),
+    AnimatedContent(
+      targetState = filteredGames,
+      transitionSpec = {
+        slideInVertically { it } + fadeIn() with
+                slideOutVertically { -it } + fadeOut()
+      },
       modifier = Modifier.fillMaxSize()
-    ) {
-      if (filteredGames.isEmpty()) {
-        item {
+    ) { gamesToDisplay ->
+      if (gamesToDisplay.isEmpty()) {
+        Box(
+          modifier = Modifier.fillMaxSize(),
+          contentAlignment = Alignment.Center
+        ) {
           Text(
             text = "Nenhum jogo encontrado.",
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            style = MaterialTheme.typography.bodyLarge
           )
         }
       } else {
-        items(filteredGames) { game ->
-          CardView(navController, game, onSetNotification = { selectedGame ->
-            scheduleNotification(context = context, game = selectedGame)
-            Toast.makeText(
-              context,
-              "Notificação agendada para ${selectedGame.name}",
-              Toast.LENGTH_SHORT
-            ).show()
-          })
+        LazyColumn(
+          verticalArrangement = Arrangement.spacedBy(8.dp),
+          modifier = Modifier.fillMaxSize()
+        ) {
+          items(gamesToDisplay) { game ->
+            CardView(navController, game, onSetNotification = { selectedGame ->
+              scheduleNotification(context = context, game = selectedGame)
+              Toast.makeText(
+                context,
+                "Notificação agendada para ${selectedGame.name}",
+                Toast.LENGTH_SHORT
+              ).show()
+            })
+          }
         }
       }
     }
