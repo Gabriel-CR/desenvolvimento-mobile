@@ -11,6 +11,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,7 +23,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.iplay.database.SettingsDataStore
+import com.example.iplay.factory.SettingsViewModelFactory
 import com.example.iplay.models.GameViewModel
+import com.example.iplay.models.SettingsViewModel
 import com.example.iplay.models.UserViewModel
 import com.example.iplay.ui.components.BottomBar
 import com.example.iplay.ui.components.TopBar
@@ -44,15 +48,23 @@ class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
+    val settingsDataStore = SettingsDataStore(applicationContext)
+
     setContent {
       val navController = rememberNavController()
+      val currentBackStackEntry = navController.currentBackStackEntryAsState()
+      val currentRoute = currentBackStackEntry.value?.destination?.route
       val isDarkTheme = isSystemInDarkTheme()
       var isDarkThemeManual by remember { mutableStateOf(isDarkTheme) }
       val gameViewModel: GameViewModel = viewModel()
-      val currentBackStackEntry = navController.currentBackStackEntryAsState()
-      val currentRoute = currentBackStackEntry.value?.destination?.route
       val user: UserViewModel = viewModel()
-      createNotificationChannel(LocalContext.current)
+
+      val settingVm: SettingsViewModel = viewModel(
+        factory = SettingsViewModelFactory(settingsDataStore)
+      )
+
+      val isDarkModeEnabled by settingVm.isDarkModeEnabled.collectAsState()
+      val areNotificationsEnabled by settingVm.areNotificationsEnabled.collectAsState()
 
       IPlayTheme(darkTheme = isDarkThemeManual) {
         Scaffold(
@@ -80,13 +92,13 @@ class MainActivity : ComponentActivity() {
             composable("search") { SearchScreen(navController, gameViewModel) }
             composable("settings") {
               SettingsScreen(
-                navController,
-                isDarkModeEnabled = isDarkThemeManual,
-                onToggleDarkMode = { isDarkThemeManual = it },
+                navController = navController,
+                isDarkModeEnabled = isDarkModeEnabled,
+                areNotificationsEnabled = areNotificationsEnabled,
+                onToggleDarkMode = settingVm::toggleDarkMode,
+                onToggleNotifications = settingVm::toggleNotifications,
                 onClearFavorites = { gameViewModel.clearFavorite() },
-                onResetPreferences = {
-                  isDarkThemeManual = isDarkTheme
-                }
+                onResetPreferences = { isDarkThemeManual = isDarkTheme }
               )
             }
             composable("help") { HelpScreen(navController) }

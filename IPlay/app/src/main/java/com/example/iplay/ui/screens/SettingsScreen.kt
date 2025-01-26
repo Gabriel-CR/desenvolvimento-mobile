@@ -25,7 +25,9 @@ import com.example.iplay.ui.theme.PrimaryTextColor
 fun SettingsScreen(
   navController: NavController,
   isDarkModeEnabled: Boolean,
+  areNotificationsEnabled: Boolean,
   onToggleDarkMode: (Boolean) -> Unit,
+  onToggleNotifications: (Boolean) -> Unit,
   onClearFavorites: () -> Unit,
   onResetPreferences: () -> Unit
 ) {
@@ -35,6 +37,7 @@ fun SettingsScreen(
       .padding(5.dp),
     verticalArrangement = Arrangement.spacedBy(16.dp)
   ) {
+    // Opção de Modo Escuro
     Row(
       modifier = Modifier.fillMaxWidth(),
       verticalAlignment = Alignment.CenterVertically
@@ -53,6 +56,26 @@ fun SettingsScreen(
 
     Divider()
 
+    // Opção de Notificações
+    Row(
+      modifier = Modifier.fillMaxWidth(),
+      verticalAlignment = Alignment.CenterVertically
+    ) {
+      Text(
+        text = "Notificações",
+        style = MaterialTheme.typography.titleMedium,
+        color = PrimaryTextColor,
+        modifier = Modifier.weight(2f)
+      )
+      Switch(
+        checked = areNotificationsEnabled,
+        onCheckedChange = onToggleNotifications
+      )
+    }
+
+    Divider()
+
+    // Botão para limpar favoritos
     Button(
       onClick = onClearFavorites,
       modifier = Modifier.fillMaxWidth(),
@@ -61,6 +84,7 @@ fun SettingsScreen(
       Text("Limpar Favoritos")
     }
 
+    // Botão para redefinir preferências
     OutlinedButton(
       onClick = onResetPreferences,
       modifier = Modifier.fillMaxWidth(),
@@ -70,3 +94,4 @@ fun SettingsScreen(
     }
   }
 }
+

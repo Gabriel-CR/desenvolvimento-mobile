@@ -58,11 +58,14 @@ dependencies {
   implementation ("androidx.core:core-splashscreen:1.0.1")
   implementation ("androidx.compose.material:material-icons-core:1.x.x")
   implementation ("androidx.compose.material:material-icons-extended:1.x.x")
-// Notificações
+  // Notificações
   implementation ("androidx.core:core-ktx:1.10.1")
 
   implementation ("androidx.media3:media3-exoplayer:1.0.2")
   implementation ("androidx.media3:media3-ui:1.0.2")
+
+  // DataStore
+  implementation("androidx.datastore:datastore-preferences:1.1.2")
 
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)
