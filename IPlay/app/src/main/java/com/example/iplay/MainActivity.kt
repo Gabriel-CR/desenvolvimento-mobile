@@ -55,7 +55,6 @@ class MainActivity : ComponentActivity() {
       val currentBackStackEntry = navController.currentBackStackEntryAsState()
       val currentRoute = currentBackStackEntry.value?.destination?.route
       val isDarkTheme = isSystemInDarkTheme()
-      var isDarkThemeManual by remember { mutableStateOf(isDarkTheme) }
       val gameViewModel: GameViewModel = viewModel()
       val user: UserViewModel = viewModel()
       createNotificationChannel(LocalContext.current)
@@ -67,7 +66,7 @@ class MainActivity : ComponentActivity() {
       val isDarkModeEnabled by settingVm.isDarkModeEnabled.collectAsState()
       val areNotificationsEnabled by settingVm.areNotificationsEnabled.collectAsState()
 
-      IPlayTheme(darkTheme = isDarkThemeManual) {
+      IPlayTheme(darkTheme = isDarkModeEnabled) {
         Scaffold(
           topBar = {
             if (currentRoute != "login" && currentRoute != "videoPlayer/{videoResId}") {
@@ -99,7 +98,7 @@ class MainActivity : ComponentActivity() {
                 onToggleDarkMode = settingVm::toggleDarkMode,
                 onToggleNotifications = settingVm::toggleNotifications,
                 onClearFavorites = { gameViewModel.clearFavorite() },
-                onResetPreferences = { isDarkThemeManual = isDarkTheme }
+                onResetPreferences = { settingVm.toggleDarkMode(isDarkTheme) }
               )
             }
             composable("help") { HelpScreen(navController) }
