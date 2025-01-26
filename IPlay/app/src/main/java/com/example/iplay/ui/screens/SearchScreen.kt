@@ -73,7 +73,7 @@ fun SearchScreen(
         slideInVertically { it } + fadeIn() with
                 slideOutVertically { -it } + fadeOut()
       },
-      modifier = Modifier.fillMaxSize()
+      modifier = Modifier.fillMaxSize(), label = ""
     ) { gamesToDisplay ->
       if (gamesToDisplay.isEmpty()) {
         Box(

@@ -1,5 +1,10 @@
 package com.example.iplay.ui.components
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -20,9 +25,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -37,6 +47,19 @@ fun CardView(
   game: Game,
   onSetNotification: (Game) -> Unit
 ) {
+  // Estado para controlar o balanço
+  var isShaking by remember { mutableStateOf(false) }
+
+  // Animação para o balanço
+  val rotation by animateFloatAsState(
+    targetValue = if (isShaking) 15f else 0f,
+    animationSpec = infiniteRepeatable(
+      animation = tween(durationMillis = 200, easing = LinearEasing),
+      repeatMode = RepeatMode.Reverse
+    ),
+    finishedListener = { isShaking = false }
+  )
+
   Card(
     modifier = Modifier
       .fillMaxWidth()
@@ -76,10 +99,18 @@ fun CardView(
         )
       }
 
-      IconButton(onClick = { onSetNotification(game) }) {
+      IconButton(
+        onClick = {
+          onSetNotification(game)
+          isShaking = true // Ativa o balanço
+        }
+      ) {
         Icon(
           imageVector = Icons.Default.Notifications,
-          contentDescription = "Set Notification"
+          contentDescription = "Set Notification",
+          modifier = Modifier.graphicsLayer(
+            rotationZ = rotation
+          )
         )
       }
     }

@@ -121,7 +121,7 @@ class MainActivity : ComponentActivity() {
     }
   }
 
-  fun createNotificationChannel(context: Context) {
+  private fun createNotificationChannel(context: Context) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       val channel = NotificationChannel(
         "GAME_CHANNEL",
