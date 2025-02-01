@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "599837375454",
+    "project_id": "crudaula01",
+    "storage_bucket": "crudaula01.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599837375454:android:aa82a623e195b9a040bb4f",
+        "android_client_info": {
+          "package_name": "com.example.crud01"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWYIOZCuBxvvUKYd3n4jXO1gkB8PrMqQM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
