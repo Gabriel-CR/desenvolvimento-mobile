@@ -5,16 +5,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.authapp.data.AuthRepository
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
-  var loginResult: ((Boolean) -> Unit)? = null
-  var registerResult: ((Boolean) -> Unit)? = null
+  private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
   fun login(email: String, password: String, onResult: (Boolean) -> Unit) {
     viewModelScope.launch {
       val success = repository.loginUser(email, password)
-      onResult(success) // Retorna true ou false para a tela de login
+      onResult(success)
     }
   }
 
@@ -51,6 +51,13 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
     viewModelScope.launch {
       val success = repository.registerUser(email, password, name)
       onResult(success)
+    }
+  }
+
+  fun getUserProfilePicture(onResult: (String?) -> Unit) {
+    viewModelScope.launch {
+      val photoUrl = repository.getUserProfilePicture()
+      onResult(photoUrl)
     }
   }
 }

@@ -66,6 +66,7 @@ dependencies {
   implementation("androidx.compose.material3:material3:1.2.0")
   implementation("androidx.compose.ui:ui-tooling-preview")
   implementation("com.google.firebase:firebase-database-ktx")
+  implementation("io.coil-kt:coil-compose:2.1.0")
   implementation(libs.androidx.material3.android)
 
   debugImplementation("androidx.compose.ui:ui-tooling")

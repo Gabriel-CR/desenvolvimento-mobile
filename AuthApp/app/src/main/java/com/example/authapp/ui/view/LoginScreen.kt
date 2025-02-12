@@ -19,6 +19,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -90,6 +92,7 @@ fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Campo de Email
         CustomTextField(
           value = email,
           onValueChange = { email = it },
@@ -97,6 +100,7 @@ fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
           icon = Icons.Filled.Email
         )
 
+        // Campo de Senha
         CustomTextField(
           value = password,
           onValueChange = { password = it },
@@ -125,6 +129,7 @@ fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Botão de Login com Google
         Button(
           onClick = {
             val signInIntent = viewModel.getGoogleSignInClient(context).signInIntent

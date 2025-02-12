@@ -113,6 +113,16 @@ class AuthRepository {
     }
   }
 
+  fun getUserProfilePicture(): String? {
+    return try {
+      val user = FirebaseAuth.getInstance().currentUser
+      user?.photoUrl?.toString()
+    } catch (e: Exception) {
+      Log.e("AuthRepository", "Erro ao buscar foto do usuário: ${e.message}")
+      null
+    }
+  }
+
   // Logout
   fun logout() {
     auth.signOut()
