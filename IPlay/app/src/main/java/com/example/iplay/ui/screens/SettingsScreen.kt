@@ -25,8 +25,10 @@ import com.example.iplay.ui.theme.PrimaryTextColor
 fun SettingsScreen(
   navController: NavController,
   isDarkModeEnabled: Boolean,
+  isAutoDarkModeEnabled: Boolean,
   areNotificationsEnabled: Boolean,
   onToggleDarkMode: (Boolean) -> Unit,
+  onToggleAutoDarkMode: (Boolean) -> Unit,
   onToggleNotifications: (Boolean) -> Unit,
   onClearFavorites: () -> Unit,
   onResetPreferences: () -> Unit
@@ -37,7 +39,7 @@ fun SettingsScreen(
       .padding(5.dp),
     verticalArrangement = Arrangement.spacedBy(16.dp)
   ) {
-    // Opção de Modo Escuro
+    // Opção de Modo Escuro Manual
     Row(
       modifier = Modifier.fillMaxWidth(),
       verticalAlignment = Alignment.CenterVertically
@@ -51,6 +53,23 @@ fun SettingsScreen(
       Switch(
         checked = isDarkModeEnabled,
         onCheckedChange = onToggleDarkMode
+      )
+    }
+
+    // Opção de Modo Escuro Automático
+    Row(
+      modifier = Modifier.fillMaxWidth(),
+      verticalAlignment = Alignment.CenterVertically
+    ) {
+      Text(
+        text = "Modo Escuro Automático (após 18h)",
+        style = MaterialTheme.typography.titleMedium,
+        color = PrimaryTextColor,
+        modifier = Modifier.weight(2f)
+      )
+      Switch(
+        checked = isAutoDarkModeEnabled,
+        onCheckedChange = onToggleAutoDarkMode
       )
     }
 
@@ -94,4 +113,3 @@ fun SettingsScreen(
     }
   }
 }
-

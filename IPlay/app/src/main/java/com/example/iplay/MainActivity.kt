@@ -63,7 +63,8 @@ class MainActivity : ComponentActivity() {
         factory = SettingsViewModelFactory(settingsDataStore)
       )
 
-      val isDarkModeEnabled by settingVm.isDarkModeEnabled.collectAsState()
+      val isDarkModeEnabled by settingVm.computedDarkMode.collectAsState()
+      val isAutoDarkModeEnabled by settingVm.isAutoDarkModeEnabled.collectAsState()
       val areNotificationsEnabled by settingVm.areNotificationsEnabled.collectAsState()
 
       IPlayTheme(darkTheme = isDarkModeEnabled) {
@@ -94,8 +95,10 @@ class MainActivity : ComponentActivity() {
               SettingsScreen(
                 navController = navController,
                 isDarkModeEnabled = isDarkModeEnabled,
+                isAutoDarkModeEnabled = isAutoDarkModeEnabled, // Novo estado para modo escuro automático
                 areNotificationsEnabled = areNotificationsEnabled,
                 onToggleDarkMode = settingVm::toggleDarkMode,
+                onToggleAutoDarkMode = settingVm::toggleAutoDarkMode, // Nova função para alternar o modo automático
                 onToggleNotifications = settingVm::toggleNotifications,
                 onClearFavorites = { gameViewModel.clearFavorite() },
                 onResetPreferences = { settingVm.toggleDarkMode(isDarkTheme) }

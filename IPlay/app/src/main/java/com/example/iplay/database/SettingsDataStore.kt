@@ -13,6 +13,7 @@ val Context.dataStore by preferencesDataStore(name = "settings")
 // Chaves de preferências
 object SettingsKeys {
   val DARK_MODE = booleanPreferencesKey("dark_mode")
+  val AUTO_DARK_MODE = booleanPreferencesKey("auto_dark_mode") // Nova chave
   val NOTIFICATIONS = booleanPreferencesKey("notifications")
 }
 
@@ -24,6 +25,11 @@ class SettingsDataStore(private val context: Context) {
       preferences[SettingsKeys.DARK_MODE] ?: false
     }
 
+  val isAutoDarkModeEnabled: Flow<Boolean> = context.dataStore.data
+    .map { preferences ->
+      preferences[SettingsKeys.AUTO_DARK_MODE] ?: false
+    }
+
   val areNotificationsEnabled: Flow<Boolean> = context.dataStore.data
     .map { preferences ->
       preferences[SettingsKeys.NOTIFICATIONS] ?: true
@@ -32,6 +38,12 @@ class SettingsDataStore(private val context: Context) {
   suspend fun toggleDarkMode(enabled: Boolean) {
     context.dataStore.edit { preferences ->
       preferences[SettingsKeys.DARK_MODE] = enabled
+    }
+  }
+
+  suspend fun toggleAutoDarkMode(enabled: Boolean) {
+    context.dataStore.edit { preferences ->
+      preferences[SettingsKeys.AUTO_DARK_MODE] = enabled
     }
   }
 
