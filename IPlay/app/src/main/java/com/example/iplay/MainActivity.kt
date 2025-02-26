@@ -13,21 +13,22 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.iplay.database.SettingsDataStore
+import com.example.iplay.factory.AuthViewModelFactory
 import com.example.iplay.factory.SettingsViewModelFactory
+import com.example.iplay.models.AuthViewModel
 import com.example.iplay.models.GameViewModel
 import com.example.iplay.models.SettingsViewModel
 import com.example.iplay.models.UserViewModel
+import com.example.iplay.repository.AuthRepository
 import com.example.iplay.ui.components.BottomBar
 import com.example.iplay.ui.components.TopBar
 import com.example.iplay.ui.screens.FavouritesScreen
@@ -38,6 +39,7 @@ import com.example.iplay.ui.screens.HomeScreen
 import com.example.iplay.ui.screens.LoginScreen
 import com.example.iplay.ui.screens.LogoutScreen
 import com.example.iplay.ui.screens.ProfileScreen
+import com.example.iplay.ui.screens.RegisterScreen
 import com.example.iplay.ui.screens.SearchScreen
 import com.example.iplay.ui.screens.SettingsScreen
 import com.example.iplay.ui.screens.VideoPlayerScreen
@@ -57,6 +59,8 @@ class MainActivity : ComponentActivity() {
       val isDarkTheme = isSystemInDarkTheme()
       val gameViewModel: GameViewModel = viewModel()
       val user: UserViewModel = viewModel()
+      val repository = AuthRepository()
+      val authViewModel = ViewModelProvider(this, AuthViewModelFactory(repository)).get(AuthViewModel::class.java)
       createNotificationChannel(LocalContext.current)
 
       val settingVm: SettingsViewModel = viewModel(
@@ -70,12 +74,12 @@ class MainActivity : ComponentActivity() {
       IPlayTheme(darkTheme = isDarkModeEnabled) {
         Scaffold(
           topBar = {
-            if (currentRoute != "login" && currentRoute != "videoPlayer/{videoResId}") {
+            if (currentRoute != "login" && currentRoute != "videoPlayer/{videoResId}" && currentRoute != "register") {
               TopBar(navController)
             }
           },
           bottomBar = {
-            if (currentRoute != "login" && currentRoute != "videoPlayer/{videoResId}") {
+            if (currentRoute != "login" && currentRoute != "videoPlayer/{videoResId}" && currentRoute != "register") {
               BottomBar(navController)
             }
           }
@@ -85,7 +89,8 @@ class MainActivity : ComponentActivity() {
             startDestination = "login",
             modifier = Modifier.padding(innerPadding)
           ) {
-            composable("login") { LoginScreen(navController, user) }
+            composable("login") { LoginScreen(navController, authViewModel) }
+            composable("register") { RegisterScreen(authViewModel, navController) }
             composable("home") { HomeScreen(navController, gameViewModel) }
             composable("games") { GamesScreen(navController, gameViewModel) }
             composable("favorites") { FavouritesScreen(navController, gameViewModel) }
@@ -105,7 +110,7 @@ class MainActivity : ComponentActivity() {
               )
             }
             composable("help") { HelpScreen(navController) }
-            composable("logout") { LogoutScreen(navController) }
+            composable("logout") { LogoutScreen(navController, authViewModel) }
             composable("videoPlayer/{videoResId}") { backStackEntry ->
               val videoResId = backStackEntry.arguments?.getString("videoResId")?.toInt() ?: 0
               VideoPlayerScreen(videoResId, navController)

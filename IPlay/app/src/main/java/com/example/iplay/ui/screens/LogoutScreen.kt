@@ -9,16 +9,18 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.iplay.models.AuthViewModel
 import kotlinx.coroutines.delay
 
 @Composable
 fun LogoutScreen(
-  navController: NavController
+  navController: NavController,
+  viewModel: AuthViewModel
 ) {
   var isLoading by remember { mutableStateOf(true) }
 
   LaunchedEffect(Unit) {
-    delay(2000) // 2 segundos
+    viewModel.logout()
     isLoading = false
     navController.navigate("login") {
       popUpTo("logout") { inclusive = true }

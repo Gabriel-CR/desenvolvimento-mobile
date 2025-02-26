@@ -1,7 +1,7 @@
 package com.example.iplay.ui.screens
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Event
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
@@ -16,7 +16,7 @@ sealed class BottomBarScreen(
     route = "games",
     icon = {
       androidx.compose.material3.Icon(
-        Icons.Default.Event,
+        Icons.Default.DateRange,
         contentDescription = "Jogos"
       )
     },
