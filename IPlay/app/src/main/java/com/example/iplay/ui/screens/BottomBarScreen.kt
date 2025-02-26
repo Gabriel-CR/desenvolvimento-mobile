@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.runtime.Composable
 
 sealed class BottomBarScreen(
@@ -44,10 +45,22 @@ sealed class BottomBarScreen(
     },
     label = "Buscar"
   )
+
+  object Chat : BottomBarScreen(
+    route = "chat",
+    icon = {
+      androidx.compose.material3.Icon(
+        Icons.Default.MailOutline,
+        contentDescription = "Chat"
+      )
+    },
+    label = "Chat"
+  )
 }
 
 val screens = listOf(
   BottomBarScreen.Games,
   BottomBarScreen.Profile,
-  BottomBarScreen.Search
+  BottomBarScreen.Search,
+  BottomBarScreen.Chat
 )

@@ -26,6 +26,7 @@ import com.example.iplay.factory.AuthViewModelFactory
 import com.example.iplay.factory.SettingsViewModelFactory
 import com.example.iplay.models.AuthViewModel
 import com.example.iplay.models.GameViewModel
+import com.example.iplay.models.RealtimeDatabaseViewModel
 import com.example.iplay.models.SettingsViewModel
 import com.example.iplay.models.UserViewModel
 import com.example.iplay.repository.AuthRepository
@@ -39,6 +40,7 @@ import com.example.iplay.ui.screens.HomeScreen
 import com.example.iplay.ui.screens.LoginScreen
 import com.example.iplay.ui.screens.LogoutScreen
 import com.example.iplay.ui.screens.ProfileScreen
+import com.example.iplay.ui.screens.RealtimeDatabaseScreen
 import com.example.iplay.ui.screens.RegisterScreen
 import com.example.iplay.ui.screens.SearchScreen
 import com.example.iplay.ui.screens.SettingsScreen
@@ -59,6 +61,7 @@ class MainActivity : ComponentActivity() {
       val isDarkTheme = isSystemInDarkTheme()
       val gameViewModel: GameViewModel = viewModel()
       val user: UserViewModel = viewModel()
+      val chat: RealtimeDatabaseViewModel = viewModel()
       val repository = AuthRepository()
       val authViewModel = ViewModelProvider(this, AuthViewModelFactory(repository)).get(AuthViewModel::class.java)
       createNotificationChannel(LocalContext.current)
@@ -96,6 +99,7 @@ class MainActivity : ComponentActivity() {
             composable("favorites") { FavouritesScreen(navController, gameViewModel) }
             composable("profile") { ProfileScreen(navController, user) }
             composable("search") { SearchScreen(navController, gameViewModel) }
+            composable("chat") { RealtimeDatabaseScreen(navController, chat) }
             composable("settings") {
               SettingsScreen(
                 navController = navController,
